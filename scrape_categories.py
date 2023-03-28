@@ -13,7 +13,7 @@ def store(symptoms,disease_name,plant_name):
     #print(disease_name)
     file1 = open("dataset.txt", "a")  # append mode
     if(symptoms!=""):
-        file1.write("\n"+symptoms+"\t"+plant_name+" "+disease_name+"\n")
+        file1.write("\n"+symptoms+"\t"+plant_name+" "+disease_name)
     file1.close()
 
 def getPlantName(plant_name):
@@ -42,13 +42,13 @@ totalcount = 0
 # TODO automate it for other links
 for link in list_of_diseases_links:
     plant_name = getPlantName(link)
-    single_plant_disease_page = w.page(link,auto_suggest=False)
+    single_plant_disease_page = w.page(link, auto_suggest=False)
     single_plant_disease_links = single_plant_disease_page.links
 
     #To Do automate for other links inside the outer for-loop
     for plant_specific_link in single_plant_disease_links:
         try:
-            single_disease_page = w.page(plant_specific_link,auto_suggest=False)
+            single_disease_page = w.page(plant_specific_link, auto_suggest=False)
             totalcount += 1
         except:
             continue
@@ -61,8 +61,8 @@ for link in list_of_diseases_links:
             if ("hosts and symptoms" in para.lower() or "symptoms" in para.lower()) and "==" in para:
                 pagecount += 1
                 print(pagecount)
-                to_store_paragraphs = get_paragraphs(single_disease_content_paragraphs,i+1)
-                store(to_store_paragraphs, plant_specific_link,plant_name)
+                to_store_paragraphs = get_paragraphs(single_disease_content_paragraphs, i+1)
+                store(to_store_paragraphs, plant_specific_link, plant_name)
                 flag = 1
                 break
 
