@@ -8,7 +8,7 @@ df = pd.DataFrame(columns=["category", "text"])
 labels = {} #this dictionary contains all labels and their associated index {"index1":0, "index2":1, ...}
 
 #This open the dataset.txt file and stores all the data in the form of a list of strings (corpus)
-with open('dataset.txt', 'r') as file:
+with open('dataset_PName.txt', 'r') as file:
     corpus = file.read()
     corpus = corpus.split("\n")
 
@@ -22,7 +22,7 @@ for i, record in enumerate(corpus):
         labels[category] = i
 
 #Uncomment to see the generated df.
-# print(df)
+print(df)
 
 #The BERT tokenizer used for tokenization.
 tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
@@ -54,7 +54,11 @@ class Dataset(torch.utils.data.Dataset):
         return batch_texts, batch_y
 
 #Code to split the data for training and validation
-np.random.seed(112)
 df_train, df_val, df_test = np.split(df.sample(frac=1, random_state=42),
                                      [int(.8*len(df)), int(.9*len(df))])
 print(len(df_train), len(df_val), len(df_test))
+df_train.to_csv("./train2.csv")
+df_test.to_csv("./val2.csv")
+df_val.to_csv("./test2.csv")
+df.to_csv("./df2.csv")
+print(len(df))
